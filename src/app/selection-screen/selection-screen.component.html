@@ -1,0 +1,208 @@
+<body>
+  <div id="songSelectionContainer">
+    <div id="songSelectionText">Select format</div>
+    <div id="songSelection" (change)="countSelectedSongsTotal()">
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'PC-98')" />
+        <span>PC-98</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Main game')" />
+        <span>Main games</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off')" />
+        <span>Spin offs</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter')" />
+        <span>Fighters</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Character theme')" />
+        <span>Character themes</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Arrange')" />
+        <span>Character themes (Arrange)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Main game', 'Stage theme')" />
+        <span>Stage themes (Main games)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off', 'Stage theme')" />
+        <span>Stage themes (Spin offs)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Stage theme')" />
+        <span>Stage themes (Fighters)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Menu theme' )" />
+        <span>Menu theme</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Hifuu Club')" />
+        <span>Hifuu Club</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Print works')" />
+        <span>Print Works</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectEverything($event)" />
+        <span>EVERYTHING</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" />
+        <span>Custom</span>
+      </label>
+    </div>
+    <div id="questionNumberText">How many questions</div>
+    <div id="questionNumber">
+      <input type="number" id="questionInput" (input)="validateNumberOfQuestions($event)" [value]="1" min="1" [(ngModel)]="numberOfQuestions" /><span
+        style="font-size: 1.5em;"> of {{selectedSongsTotal}} selected songs</span>
+    </div>
+    <div id="difficultyText">Difficulty</div>
+    <div id="difficulty">
+      <label class="difficultyItem">
+        <input type="radio" name="difficulty" class="difficultyRadio" (change)="getDifficultyLevel($event)" />
+        <span>Easy</span>
+      </label>
+      <label class="difficultyItem">
+        <input type="radio" name="difficulty" class="difficultyRadio" (change)="getDifficultyLevel($event)" />
+        <span>Normal</span>
+      </label>
+      <label class="difficultyItem">
+        <input type="radio" name="difficulty" class="difficultyRadio" (change)="getDifficultyLevel($event)" />
+        <span>Hard</span>
+      </label>
+      <label class="difficultyItem">
+        <input type="radio" name="difficulty" class="difficultyRadio" (change)="getDifficultyLevel($event)" />
+        <span>Lunatic</span>
+      </label>
+    </div>
+    <div id="playButtonContainer">
+      <button id="playButton" (click)="playGame()">Play!</button>
+    </div>
+  </div>
+
+  <div id="albumList">
+    <!-- PC-98 Albums -->
+    <div class="albumGroup">
+      <h2>PC-98</h2>
+      <div *ngFor="let album of albumsPC98" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Main Game Albums -->
+    <div class="albumGroup">
+      <h2>Main Game</h2>
+      <div *ngFor="let album of albumsMainGame" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Fighter Albums -->
+    <div class="albumGroup">
+      <h2>Fighter</h2>
+      <div *ngFor="let album of albumsFighter" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Spin-Off Albums -->
+    <div class="albumGroup">
+      <h2>Spin Off</h2>
+      <div *ngFor="let album of albumsSpinOff" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Hifuu Club Albums -->
+    <div class="albumGroup">
+      <h2>Hifuu Club</h2>
+      <div *ngFor="let album of albumsHifuuClub" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Print Works Albums -->
+    <div class="albumGroup">
+      <h2>Print Works</h2>
+      <div *ngFor="let album of albumsPrintWorks" class="albumContainer">
+        <label class="albumButton">
+          <input (click)="selectAlbum(album)" type="radio" name="album" class="albumRadio" />
+          <span>{{ album.name }}</span>
+          <span *ngIf="countSelectedSongsAlbum(album) > 0" class="albumBadge">
+            {{ countSelectedSongsAlbum(album) }}
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="songListContainer" *ngIf="selectedAlbum" (change)="countSelectedSongsTotal()">
+    <h2>{{ selectedAlbum.name }}</h2>
+    <div class="songActions">
+      <button (click)="selectAllSongs()">Select All</button>
+      <button (click)="deselectAllSongs()">Deselect All</button>
+    </div>
+    <ul class="songList">
+      <li *ngFor="let song of selectedAlbum.songs; let i = index" class="songCheckbox">
+        <label>
+          <input type="checkbox" [(ngModel)]="selectedAlbum.songs[i].selected" />
+          <span>{{ song.name }}</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+
+  <div id="songModal" class="modal" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modalContent" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeModal()">&times;</button>
+      <h2>{{ selectedAlbum?.name }}</h2>
+      <div class="modalActions">
+        <button (click)="selectAllSongs()">Select All</button>
+        <button (click)="deselectAllSongs()">Deselect All</button>
+      </div>
+      <ul class="songListModal">
+        <li *ngFor="let song of selectedAlbum?.songs; let songIndex = index">
+          <label><input type="checkbox" [(ngModel)]="selectedAlbum.songs[songIndex].selected" /> {{ song.name }}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>

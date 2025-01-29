@@ -1,0 +1,360 @@
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal para alinear ambos elementos */
+body {
+  display: flex;
+  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  width: 100vw; /* Asegura que ocupe toda la anchura de la pantalla */
+}
+
+/*Estilo general y división para #songSelectionContainer*/
+#songSelectionContainer {
+  width: 30%;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 2px solid #ddd; /* Separador visual */
+}
+
+/*Estilo general y división para #albumList*/
+#albumList {
+  width: 40%;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 2px solid #ddd; /* Separador visual */
+  display: grid;
+  grid-template-columns: 1fr; /* Una columna por fila para cada grupo */
+  gap: 20px; /* Espacio entre los grupos */
+  margin-bottom: 20px;
+}
+
+/*Estilo general y división para #songListContainer*/
+#songListContainer {
+  width: 30%; /* Ancho fijo */
+  height: 100%; /* Asegura que ocupe toda la altura disponible */
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Elementos apilados verticalmente */
+  overflow-y: auto; /* Añade scroll si es necesario */
+}
+
+/* -------------------------------------------------------------------------------------- SONG SELECTION CONTAINER */
+
+#playSongButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh; /* Centrado vertical */
+}
+
+#playSongButton {
+  width: 120px;
+  height: 120px;
+  border: none;
+  background-color: #e0e0e0; /* Gris claro */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: inset -4px -4px 10px rgba(255, 255, 255, 0.6),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.play-icon {
+  width: 80%;
+  height: 80%;
+}
+
+/* Estilos para el círculo */
+.play-icon circle {
+  fill: none;
+  stroke: black;
+  stroke-width: 4;
+}
+
+/* Estilos para el símbolo de Play */
+.play-icon polygon {
+  fill: black;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+#selectSongButtonContainer {
+  display: flex;
+  justify-content: center; /* Centrar el botón */
+  margin-top: 20px;
+}
+
+#selectSongButton {
+  width: 80%; /* Ocupar el 80% del ancho */
+  padding: 15px 20px; /* Tamaño generoso */
+  font-size: 1.5rem; /* Texto grande */
+  color: #e0e0e0; /* Blanco grisáceo */
+  background: linear-gradient(
+    to bottom,
+    #606060,
+    #404040
+  ); /* Efecto tridimensional */
+  border: none;
+  border-radius: 50px; /* Hacerlo ovalado */
+  cursor: pointer;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3),
+    -3px -3px 6px rgba(255, 255, 255, 0.2); /* Efecto 3D */
+  transition: all 0.2s ease-in-out;
+}
+
+#selectSongButton:hover {
+  background: linear-gradient(to bottom, #707070, #505050);
+}
+
+#selectSongButton:active {
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to bottom, #505050, #303030);
+}
+
+#selectedSongContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#selectedSong{
+    text-align: center;
+    font-size: 2em;
+}
+
+/* ------------------------------------------------------------------------------------- ALBUM LIST -------------- */
+
+.albumGroup {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas dentro de cada grupo */
+  gap: 20px; /* Espacio entre álbumes dentro del grupo */
+  margin-bottom: 20px;
+}
+
+.albumGroup h2 {
+  grid-column: span 2; /* Ocupa las 2 columnas */
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd; /* Línea separadora debajo del título */
+  padding-bottom: 5px;
+}
+
+.albumContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.albumBadge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: rgba(201, 247, 0, 0.7);
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  line-height: 24px;
+  text-align: center;
+  align-content: center;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.albumButton {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.albumButton:hover {
+  border-color: #666;
+}
+
+.albumRadio {
+  display: none; /* Hide the radio button */
+}
+
+.albumRadio + span {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex; /* Usar Flexbox para centrar */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
+  font-size: 16px; /* Ajustar tamaño del texto */
+  text-align: center; /* Por si hay texto largo */
+  word-wrap: break-word; /* Prevenir desbordamientos de texto */
+  transition: all 0.3s;
+}
+
+.albumRadio:checked + span {
+  width: 100%;
+  background-color: blueviolet;
+  color: #ccc;
+  display: inline-block;
+}
+
+/* -------------------------------------------------------------------------------------- SONG LIST -------------- */
+
+#songListContainer h2 {
+  text-align: center;
+}
+
+/* Acciones en songListContainer */
+.songActions {
+  display: flex;
+  justify-content: center; /* Botones separados horizontalmente */
+  gap: 20px; /* Espacio entre botones */
+  margin-bottom: 10px;
+}
+
+.songActions button {
+  padding: 10px 15px;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.songList {
+  width: 100%;
+  flex-grow: 1; /* Hace que ocupe todo el espacio disponible */
+  overflow-y: auto; /* Añade scroll si es necesario */
+}
+
+/* Estilo para cada canción */
+.songCheckbox {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.songCheckbox label {
+  display: flex;
+  width: 100%;
+  margin: -8px 40px -8px 40px;
+}
+
+.songCheckbox input {
+  display: none; /* Ocultar checkbox predeterminado */
+}
+
+.songCheckbox + span {
+  width: 100%;
+}
+
+.songCheckbox span {
+  flex: 1; /* Asegura que ocupe todo el espacio disponible */
+  width: 100%;
+  padding: 10px; /* Espaciado interno */
+  border: 2px solid #ccc; /* Borde del checkbox */
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.songCheckbox:hover span {
+  border-color: #666;
+}
+
+.songCheckbox input:checked + span {
+  background-color: #004a99;
+  color: #fff;
+}
+
+.songCheckbox:last-child {
+  margin-bottom: 40px;
+}
+
+/* -------------------------------------------------------------------------------------- SONG MODAL ------------- */
+
+/* Estilo para el contenedor del modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenido del modal */
+.modalContent {
+  position: relative; /* Posiciona la cruceta dentro de este contenedor */
+  background: #fff;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón de cerrar */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.closeButton:hover {
+  color: #d00;
+}
+
+/* Acciones dentro del modal */
+.modalActions {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modalActions button {
+  padding: 10px 15px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalActions button:hover {
+  background-color: #357ab8;
+}
+
+/* Lista de canciones */
+.songListModal {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.songListModal li {
+  margin-bottom: 10px;
+  text-align: left;
+}

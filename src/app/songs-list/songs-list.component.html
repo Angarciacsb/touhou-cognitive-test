@@ -1,0 +1,18 @@
+<div id="songList">
+  <div *ngFor="let album of albums; let albumIndex = index" class="containerAlbum">
+    <!-- Álbum checkbox -->
+    <input type="checkbox" id="album-{{ album.id }}" class="albumCheckbox" [(ngModel)]="album.selected"
+      (change)="toggleAlbumSelection(albumIndex, $event)" />
+
+    <label for="album-{{ album.id }}">{{ album.name }}</label>
+
+    <!-- Lista de canciones -->
+    <ul class="songAlbum">
+      <li *ngFor="let song of album.songs; let songIndex = index">
+        <input type="checkbox" id="song-{{ album.id }}-{{ song.id }}" class="songCheckbox" [(ngModel)]="song.selected"
+          (change)="updateAlbumSelection(albumIndex)" />
+        <label for="song-{{ album.id }}-{{ song.id }}">{{ song.name }}</label>
+      </li>
+    </ul>
+  </div>
+</div>

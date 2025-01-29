@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box; /* Asegura que padding y border no expandan el ancho/alto */
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden; /* Evita scroll horizontal innecesario */
+}
+
+body {
+  background-color: gray;
+}

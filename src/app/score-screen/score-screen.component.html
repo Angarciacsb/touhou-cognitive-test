@@ -1,0 +1,19 @@
+<div class="score-wrapper">
+    <button routerLink="/selection-screen" class="back-button">Volver</button>
+    
+    <h1 class="score">{{ score }} / {{ questionsArray.length }}</h1>
+
+    <!-- Tabla de resultados -->
+    <div class="score-container">
+        <div class="table-header">
+            <span>Question</span>
+            <span>Your Answer</span>
+        </div>
+        <div class="table-row" *ngFor="let question of questionsArray; let i = index">
+            <span>{{ question.name }}</span>
+            <span [ngClass]="answersArray[i].isCorrect ? 'correct' : 'incorrect'">
+                {{ answersArray[i].name }}
+            </span>
+        </div>
+    </div>
+</div>
