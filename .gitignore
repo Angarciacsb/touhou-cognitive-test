@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+create-folders.js
+create-folders.ts
+src/app/data/albums-data.js
