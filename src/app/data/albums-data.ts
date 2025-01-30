@@ -60,7 +60,7 @@ export const albums = [
             { id: 8, name: 'Vanishing Dream ~ Lost Dream', tags: ['PC-98', 'Character theme'] },
             { id: 9, name: 'Visionary Game ~ Dream War', tags: ['PC-98', 'Character theme'] },
             { id: 10, name: 'Decisive Magic Battle! ~ Fight it out!', tags: ['PC-98', 'Stage theme'] },
-            { id: 11, name: 'Disunified Field Theory of Magic', tags: ['PC-98', 'Stagee theme'] },
+            { id: 11, name: 'Disunified Field Theory of Magic', tags: ['PC-98', 'Stage theme'] },
             { id: 12, name: 'Sailor of Time', tags: ['PC-98', 'Character theme'] },
             { id: 13, name: 'Adoration of Magic', tags: ['PC-98', 'Stage theme'] },
             { id: 14, name: 'Strawberry Crisis!!', tags: ['PC-98', 'Character theme'] },
