@@ -38,7 +38,7 @@ export class GameplayScreenComponent {
     ...album,
     songs: album.songs.map((song) => ({
       ...song, // Copia todas las propiedades existentes de la canción
-      selected: false // Agrega el estado de selección
+      selected: false, // Agrega el estado de selección
     }))
   }));
 
@@ -121,14 +121,70 @@ export class GameplayScreenComponent {
     });
   }
 
-  //Función encargada de reproducir el fragmento de canción
-  playSong() {
+  /* -------------------------------------------------------------------------------------- AUDIO ------------------ */
 
+  getAudioPath(album: any, song: any, difficulty: string, trackNumber: number = 1): string {
+    const cleanSong = song.name.replace(/[<>:"\/\\|?*]+/g, '').replace(/\.\.\./g, '').trim(); //Clean symbols from the song name so they match the folder name
+
+    return `assets/audio/${album.class}/${album.id}/${song.id}. ${cleanSong}/${difficulty}/track (${trackNumber}).mp3`;
   }
 
-  /* -------------------------------------------------------------------------------------- SONG LIST -------------- */
+  //Function to initialize the questions with a random track so the track is always the same for the same question
+  async initializeQuestions() {
+    for (let question of this.questionsArray) {
+      const album = this.albums.find(a => a.id === question.albumID);
+      if (!album) continue;
+  
+      const trackLimit = await this.countAvailableTracks(album, question, this.selectedDifficulty);
+      question.selectedTrack = Math.floor(Math.random() * trackLimit) + 1; // Se almacena el track aleatorio
+    }
+  }
 
+  //Función encargada de reproducir el fragmento de canción
+  async playSong() {
+    if (this.currentSongIndex >= this.questionsArray.length) return; // Salir si ya no hay más canciones
+  
+    const currentQuestion = this.questionsArray[this.currentSongIndex];
+  
+    // Encuentra el álbum correspondiente
+    const album = this.albums.find(a => a.id === currentQuestion.albumID);
+    if (!album) {
+      console.error('Song not found:', currentQuestion.name);
+      return;
+    }
+  
+    // Usa el track preseleccionado en vez de generar uno nuevo
+    const selectedTrack = currentQuestion.selectedTrack;
+  
+    // Construye la ruta del archivo de audio
+    const audioPath = this.getAudioPath(album, currentQuestion, this.selectedDifficulty, selectedTrack);
+  
+    console.log('Playing:', audioPath);
+  
+    // Reproduce el audio
+    const audio = new Audio(audioPath);
+    audio.play().catch(err => console.error('Error playing the audio:', err));
+  }
 
+  //Función para contar los tracks disponibles de una canción en una dificultad
+  async countAvailableTracks(album: any, song: any, difficulty: string): Promise<number> {
+    let trackCount = 2; // Mínimo hay 2 tracks
+    let trackNumber = 3; // Empezamos a contar desde el tercero
+
+    while (true) {
+      const path = this.getAudioPath(album, song, difficulty, trackNumber);
+      try {
+        const response = await fetch(path, { method: 'HEAD' });
+        if (!response.ok) break; // Si el archivo no existe, para
+        //if (response.status === 404) break; // Si el archivo no existe, para
+        trackCount++;
+        trackNumber++;
+      } catch {
+        break; // Si da error, para
+      }
+    }
+    return trackCount;
+  }
 
   /* -------------------------------------------------------------------------------------- MODAL ------------------ */
 

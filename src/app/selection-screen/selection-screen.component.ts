@@ -43,7 +43,8 @@ export class SelectionScreenComponent {
     ...album,
     songs: album.songs.map((song) => ({
       ...song, // Copia todas las propiedades existentes de la canción
-      selected: false // Agrega el estado de selección
+      selected: false, // Agrega el estado de selección
+      albumID: album.id // Agrega el ID del álbum. Esto se usa para generar la ruta del archivo de audio
     }))
   }));
 

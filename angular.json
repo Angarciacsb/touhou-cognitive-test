@@ -24,6 +24,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/audio",
+                "output": "/assets/audio"
               }
             ],
             "styles": [
@@ -82,6 +87,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/audio",
+                "output": "/assets/audio"
               }
             ],
             "styles": [
