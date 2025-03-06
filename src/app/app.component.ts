@@ -7,7 +7,7 @@ import { ScoreScreenComponent } from './score-screen/score-screen.component';
 @Component({
   selector: 'app-root',
   
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, SelectionScreenComponent, GameplayScreenComponent, ScoreScreenComponent],
+  imports: [RouterOutlet/*, RouterLink, RouterLinkActive, SelectionScreenComponent, GameplayScreenComponent, ScoreScreenComponent*/],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

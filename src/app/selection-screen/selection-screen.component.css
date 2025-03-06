@@ -361,11 +361,13 @@ body {
 /* Contenido del modal */
 .modalContent {
   position: relative; /* Posiciona la cruceta dentro de este contenedor */
-  background: #fff;
+  background: gray;
   padding: 20px;
   width: 400px;
   max-width: 90%;
   border-radius: 8px;
+  border-width: 80px;
+  border-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -378,11 +380,58 @@ body {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #333;
+  color: #fff;
 }
 
 .closeButton:hover {
   color: #d00;
+}
+
+/*Custom list modal*/
+.customLists {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.customLists li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.customLists .dragDropIcon {
+  cursor: pointer;
+}
+
+.customLists .dragDropIcon svg{
+  display: block;
+}
+
+.customLists label {
+  flex-grow: 1; /* Hace que el texto ocupe el espacio restante */
+}
+
+.customLists .customListButton {
+  padding: 4px;
+  margin: 4px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.customLists .customListButton:hover {
+  background-color: rgb(69, 69, 69);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.customLists .customListButton svg {
+  display: block;
 }
 
 /* Acciones dentro del modal */
@@ -406,6 +455,36 @@ body {
   background-color: #357ab8;
 }
 
+/*Animaciones del Drag & Drop*/
+.cdk-drag {
+  transition: transform 0.2s ease-out;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+}
+
+/*Elemento "arrastrado" del drag & drop*/
+::ng-deep .cdk-drag-preview {
+  display: flex;
+  align-items: center;
+  background: rgb(69, 69, 69);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .cdk-drag-preview button {
+  padding: 4px;
+  margin: 4px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+
 /* Lista de canciones */
 .songListModal {
   list-style: none;
@@ -418,4 +497,14 @@ body {
 .songListModal li {
   margin-bottom: 10px;
   text-align: left;
+}
+
+/*Alert modal*/
+#alertModal .modalContent {
+  
+}
+
+#textAlertModal {
+  font-size: 2em;
+  text-align: center;
 }

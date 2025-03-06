@@ -3,44 +3,58 @@
     <div id="songSelectionText">Select format</div>
     <div id="songSelection" (change)="countSelectedSongsTotal()">
       <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'PC-98')" />
-        <span>PC-98</span>
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'PC-98', 'Menu theme')" />
+        <span>PC-98 (Menu themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'PC-98', 'Stage theme')" />
+        <span>PC-98 (Stage themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'PC-98', 'Character theme')" />
+        <span>PC-98 (Character themes)</span>
       </label>
       <label class="songSelectionItem">
         <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Main game')" />
-        <span>Main games</span>
+        <span>Main games (Menu themes)</span>
       </label>
       <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off')" />
-        <span>Spin offs</span>
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Main game', 'Stage theme')" />
+        <span>Main games (Stage themes)</span>
       </label>
       <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter')" />
-        <span>Fighters</span>
+        <input type="checkbox" class="selectionCheckbox"
+          (change)="selectSongs($event, 'Main game', 'Character theme')" />
+        <span>Main games (Character themes)</span>
       </label>
       <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Character theme')" />
-        <span>Character themes</span>
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Menu theme')" />
+        <span>Fighters (Menu themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Stage theme')" />
+        <span>Fighters (Stage themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Character theme')" />
+        <span>Fighters (Character themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off', 'Menu theme')" />
+        <span>Spin offs (Menu themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off', 'Stage theme')" />
+        <span>Spin offs (Stage themes)</span>
+      </label>
+      <label class="songSelectionItem">
+        <input type="checkbox" class="selectionCheckbox"
+          (change)="selectSongs($event, 'Spin off', 'Character theme')" />
+        <span>Spin offs (Character themes)</span>
       </label>
       <label class="songSelectionItem">
         <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Arrange')" />
         <span>Character themes (Arrange)</span>
-      </label>
-      <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Main game', 'Stage theme')" />
-        <span>Stage themes (Main games)</span>
-      </label>
-      <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Spin off', 'Stage theme')" />
-        <span>Stage themes (Spin offs)</span>
-      </label>
-      <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Fighter', 'Stage theme')" />
-        <span>Stage themes (Fighters)</span>
-      </label>
-      <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Menu theme' )" />
-        <span>Menu theme</span>
       </label>
       <label class="songSelectionItem">
         <input type="checkbox" class="selectionCheckbox" (change)="selectSongs($event, 'Hifuu Club')" />
@@ -55,14 +69,15 @@
         <span>EVERYTHING</span>
       </label>
       <label class="songSelectionItem">
-        <input type="checkbox" class="selectionCheckbox" />
+        <input type="button" class="selectionCheckbox" (click)="openCustomListsModal()" />
         <span>Custom</span>
       </label>
     </div>
     <div id="questionNumberText">How many questions</div>
     <div id="questionNumber">
-      <input type="number" id="questionInput" (input)="validateNumberOfQuestions($event)" [value]="1" min="1" [(ngModel)]="numberOfQuestions" /><span
-        style="font-size: 1.5em;"> of {{selectedSongsTotal}} selected songs</span>
+      <input type="number" id="questionInput" (input)="validateNumberOfQuestions($event)" [value]="1" min="1"
+        [(ngModel)]="numberOfQuestions" /><span style="font-size: 1.5em;"> of {{selectedSongsTotal}} selected
+        songs</span>
     </div>
     <div id="difficultyText">Difficulty</div>
     <div id="difficulty">
@@ -84,7 +99,7 @@
       </label>
     </div>
     <div id="playButtonContainer">
-      <button id="playButton" (click)="playGame()">Play!</button>
+      <button id="playButton" (click)="getLocalStaorage()">Play!</button>
     </div>
   </div>
 
@@ -190,9 +205,103 @@
     </ul>
   </div>
 
-  <div id="songModal" class="modal" *ngIf="isModalOpen" (click)="closeModal()">
+  <div id="customListsModal" class="modal" *ngIf="isCustomListsModalOpen" (click)="closeCustomListsModal()">
     <div class="modalContent" (click)="$event.stopPropagation()">
-      <button class="closeButton" (click)="closeModal()">&times;</button>
+      <button class="closeButton" (click)="closeCustomListsModal()">&times;</button>
+      <h2>Custom Lists</h2>
+      <div class="modalActions">
+        <button (click)="openCreateListModal(false)">Add List</button>
+        <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+        <button (click)="fileInput.click()">Import List</button>
+
+      </div>
+      <ul class="customLists" cdkDropList [cdkDropListData]="customLists" (cdkDropListDropped)="dropList($event)">
+        <li *ngFor="let list of customLists" cdkDrag>
+          <div class="dragDropIcon" cdkDragHandle>
+            <svg width="40px" height="40px" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 6.5C9.38071 6.5 10.5 5.38071 10.5 4C10.5 2.61929 9.38071 1.5 8 1.5C6.61929 1.5 5.5 2.61929 5.5 4C5.5 5.38071 6.61929 6.5 8 6.5Z" fill="#000000"/>
+              <path d="M15.5 6.5C16.8807 6.5 18 5.38071 18 4C18 2.61929 16.8807 1.5 15.5 1.5C14.1193 1.5 13 2.61929 13 4C13 5.38071 14.1193 6.5 15.5 6.5Z" fill="#000000"/>
+              <path d="M10.5 12C10.5 13.3807 9.38071 14.5 8 14.5C6.61929 14.5 5.5 13.3807 5.5 12C5.5 10.6193 6.61929 9.5 8 9.5C9.38071 9.5 10.5 10.6193 10.5 12Z" fill="#000000"/>
+              <path d="M15.5 14.5C16.8807 14.5 18 13.3807 18 12C18 10.6193 16.8807 9.5 15.5 9.5C14.1193 9.5 13 10.6193 13 12C13 13.3807 14.1193 14.5 15.5 14.5Z" fill="#000000"/>
+              <path d="M10.5 20C10.5 21.3807 9.38071 22.5 8 22.5C6.61929 22.5 5.5 21.3807 5.5 20C5.5 18.6193 6.61929 17.5 8 17.5C9.38071 17.5 10.5 18.6193 10.5 20Z" fill="#000000"/>
+              <path d="M15.5 22.5C16.8807 22.5 18 21.3807 18 20C18 18.6193 16.8807 17.5 15.5 17.5C14.1193 17.5 13 18.6193 13 20C13 21.3807 14.1193 22.5 15.5 22.5Z" fill="#000000"/>
+            </svg>
+          </div>
+          <label>
+            <span>{{ list }}</span>
+          </label>
+          <button class="customListButton" (click)="loadCustomList(list)">
+            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <title>Load</title>
+              <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
+                d="M3 14.25C3.41421 14.25 3.75 14.5858 3.75 15C3.75 16.4354 3.75159 17.4365 3.85315 18.1919C3.9518 18.9257 4.13225 19.3142 4.40901 19.591C4.68577 19.8678 5.07435 20.0482 5.80812 20.1469C6.56347 20.2484 7.56459 20.25 9 20.25H15C16.4354 20.25 17.4365 20.2484 18.1919 20.1469C18.9257 20.0482 19.3142 19.8678 19.591 19.591C19.8678 19.3142 20.0482 18.9257 20.1469 18.1919C20.2484 17.4365 20.25 16.4354 20.25 15C20.25 14.5858 20.5858 14.25 21 14.25C21.4142 14.25 21.75 14.5858 21.75 15V15.0549C21.75 16.4225 21.75 17.5248 21.6335 18.3918C21.5125 19.2919 21.2536 20.0497 20.6517 20.6516C20.0497 21.2536 19.2919 21.5125 18.3918 21.6335C17.5248 21.75 16.4225 21.75 15.0549 21.75H8.94513C7.57754 21.75 6.47522 21.75 5.60825 21.6335C4.70814 21.5125 3.95027 21.2536 3.34835 20.6517C2.74643 20.0497 2.48754 19.2919 2.36652 18.3918C2.24996 17.5248 2.24998 16.4225 2.25 15.0549C2.25 15.0366 2.25 15.0183 2.25 15C2.25 14.5858 2.58579 14.25 3 14.25Z"
+                stroke="#00CC44" stroke-width="1.5" fill="#00CC44" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12 2.25C12.2106 2.25 12.4114 2.33852 12.5535 2.49392L16.5535 6.86892C16.833 7.17462 16.8118 7.64902 16.5061 7.92852C16.2004 8.20802 15.726 8.18678 15.4465 7.88108L12.75 4.9318V16C12.75 16.4142 12.4142 16.75 12 16.75C11.5858 16.75 11.25 16.4142 11.25 16V4.9318L8.55353 7.88108C8.27403 8.18678 7.79963 8.20802 7.49393 7.92852C7.18823 7.64902 7.16698 7.17462 7.44648 6.86892L11.4465 2.49392C11.5886 2.33852 11.7894 2.25 12 2.25Z"
+                stroke="#00CC44" stroke-width="1.5" fill="#00CC44" />
+            </svg>
+          </button>
+          <button class="customListButton" (click)="openCreateListModal(true, list)">
+            <svg stroke="blue" fill="none" width="40px" height="40px" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <title>Rename</title>
+              <path
+                d="M15.4998 5.50067L18.3282 8.3291M13 21H21M3 21.0004L3.04745 20.6683C3.21536 19.4929 3.29932 18.9052 3.49029 18.3565C3.65975 17.8697 3.89124 17.4067 4.17906 16.979C4.50341 16.497 4.92319 16.0772 5.76274 15.2377L17.4107 3.58969C18.1918 2.80865 19.4581 2.80864 20.2392 3.58969C21.0202 4.37074 21.0202 5.63707 20.2392 6.41812L8.37744 18.2798C7.61579 19.0415 7.23497 19.4223 6.8012 19.7252C6.41618 19.994 6.00093 20.2167 5.56398 20.3887C5.07171 20.5824 4.54375 20.6889 3.48793 20.902L3 21.0004Z"
+                stroke="#2211BB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button class="customListButton" (click)="openDeleteListModal(list)">
+            <svg stroke="red" width="40px" height="40px" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <title>Delete</title>
+              <path d="M10 12V17" stroke="#FF1111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14 12V17" stroke="#FF1111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M4 7H20" stroke="#FF1111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#FF1111"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#FF1111"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button class="customListButton" (click)="exportCustomList(list)">
+            <svg fill="#CC22CC" width="40px" height="40px" viewBox="0 0 32 32" version="1.1"
+              xmlns="http://www.w3.org/2000/svg">
+              <title>Export</title>
+              <path
+                d="M24.48 19.243l-8.485 8.485-8.485-8.485 2.83-2.828 3.66 3.656v-14.071h4v14.071l3.654-3.657 2.826 2.829z">
+              </path>
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="createListModal" class="modal" *ngIf="isCreateListModalOpen" (click)="closeCreateListModal()">
+    <div class="modalContent" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeCreateListModal()">&times;</button>
+      <p id="textAlertModal">{{ createListModalMessage }}</p>
+      <div class="modalActions">
+        <input type="text" id="inputAlertModal" [(ngModel)]="createListModalInputValue"><br>
+        <button (click)="addCustomList()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="deleteListModal" class="modal" *ngIf="isDeleteListModalOpen" (click)="closeDeleteListModal()">
+    <div class="modalContent" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeDeleteListModal()">&times;</button>
+      <p id="textAlertModal">{{ deleteListModalMessage }}</p>
+      <div class="modalActions" [(ngModel)]="listToDelete">
+        <button (click)="deleteCustomList(listToDelete)">Confirm</button>
+        <button (click)="closeDeleteListModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="songModal" class="modal" *ngIf="isSongListModalOpen" (click)="closeSongListModal()">
+    <div class="modalContent" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeSongListModal()">&times;</button>
       <h2>{{ selectedAlbum?.name }}</h2>
       <div class="modalActions">
         <button (click)="selectAllSongs()">Select All</button>
@@ -203,6 +312,17 @@
           <label><input type="checkbox" [(ngModel)]="selectedAlbum.songs[songIndex].selected" /> {{ song.name }}</label>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <div id="alertModal" class="modal" *ngIf="isAlertModalOpen" (click)="closeAlertModal()">
+    <div class="modalContent" (click)="$event.stopPropagation()">
+      <button class="closeButton" (click)="closeAlertModal()">&times;</button>
+      <p id="textAlertModal">{{alertModalMessage}}</p>
+      <div class="modalActions">
+        <button (click)="closeAlertModal()">Confirm</button>
+        <button (click)="closeAlertModal()">Cancel</button>
+      </div>
     </div>
   </div>
 </body>
